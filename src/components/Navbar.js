@@ -104,6 +104,37 @@ const MobileMenuButton = styled.button`
   }
 `;
 
+const MobileControls = styled.div`
+  display: none;
+  align-items: center;
+  gap: 12px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: flex;
+  }
+`;
+
+const MobileThemeToggle = styled(motion.button)`
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: ${({ theme }) => theme.colors.backgroundSecondary};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  color: ${({ theme }) => theme.colors.text};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primaryLight};
+    border-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
 const MobileMenu = styled(motion.div)`
   position: fixed;
   top: 0;
@@ -214,9 +245,19 @@ const Navbar = ({ toggleTheme, isDarkMode }) => {
           </HireButton>
         </NavLinks>
 
-        <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-          {mobileMenuOpen ? <HiX /> : <HiMenu />}
-        </MobileMenuButton>
+        <MobileControls>
+          <MobileThemeToggle
+            onClick={toggleTheme}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {isDarkMode ? <HiSun /> : <HiMoon />}
+          </MobileThemeToggle>
+          <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <HiX /> : <HiMenu />}
+          </MobileMenuButton>
+        </MobileControls>
       </NavContainer>
 
       <AnimatePresence>
@@ -238,13 +279,6 @@ const Navbar = ({ toggleTheme, isDarkMode }) => {
                 {item.name}
               </MobileNavLink>
             ))}
-            <ThemeToggle
-              onClick={toggleTheme}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              {isDarkMode ? <HiSun /> : <HiMoon />}
-            </ThemeToggle>
             <HireButton
               href="#contact"
               onClick={handleLinkClick}
