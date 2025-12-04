@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaGithub, FaLinkedin, FaTwitter, FaHeart } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaHeart } from 'react-icons/fa';
 
 const FooterSection = styled.footer`
   background: ${({ theme }) => theme.colors.background};
@@ -164,21 +164,18 @@ const Footer = () => {
       <Container>
         <FooterContent>
           <FooterBrand>
-            <Logo href="#home">Abudllah Ejaz</Logo>
+            <Logo href="#home">Abdullah Ejaz</Logo>
             <BrandDescription>
               Passionate AI Developer specializing in Machine Learning, 
               Deep Learning, and Computer Vision. Turning complex problems 
               into elegant solutions.
             </BrandDescription>
             <SocialLinks>
-              <SocialLink href="https://github.com" target="_blank" whileHover={{ y: -3 }}>
+              <SocialLink href="https://github.com/AbdullahEjaz512" target="_blank" whileHover={{ y: -3 }}>
                 <FaGithub />
               </SocialLink>
-              <SocialLink href="https://linkedin.com" target="_blank" whileHover={{ y: -3 }}>
+              <SocialLink href="https://www.linkedin.com/in/abdullah-ejaz-7b4791311" target="_blank" whileHover={{ y: -3 }}>
                 <FaLinkedin />
-              </SocialLink>
-              <SocialLink href="https://twitter.com" target="_blank" whileHover={{ y: -3 }}>
-                <FaTwitter />
               </SocialLink>
             </SocialLinks>
           </FooterBrand>
@@ -206,10 +203,10 @@ const Footer = () => {
           <FooterColumn>
             <ColumnTitle>Contact</ColumnTitle>
             <FooterLinks>
-              <FooterLink><a href="mailto:your.email@example.com">Email Me</a></FooterLink>
+              <FooterLink><a href="mailto:abdullahejaz512@gmail.com">Email Me</a></FooterLink>
+              <FooterLink><a href="tel:+923365140129">Call Me</a></FooterLink>
               <FooterLink><a href="#contact">Get Quote</a></FooterLink>
-              <FooterLink><a href="https://fiverr.com" target="_blank" rel="noopener noreferrer">Fiverr</a></FooterLink>
-              <FooterLink><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a></FooterLink>
+              <FooterLink><a href="https://www.linkedin.com/in/abdullah-ejaz-7b4791311" target="_blank" rel="noopener noreferrer">LinkedIn</a></FooterLink>
             </FooterLinks>
           </FooterColumn>
         </FooterContent>
@@ -218,7 +215,7 @@ const Footer = () => {
 
         <FooterBottom>
           <Copyright>
-            © {currentYear} <span>AI.Dev</span>. Made with <FaHeart /> All rights reserved.
+            © {currentYear} <span>Abdullah Ejaz</span>. Made with <FaHeart /> All rights reserved.
           </Copyright>
           <FooterNav>
             <a href="#home">Privacy Policy</a>

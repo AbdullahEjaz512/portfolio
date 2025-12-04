@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
-import { FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
+import { FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiPhone } from 'react-icons/hi';
 
 const ContactSection = styled.section`
@@ -327,7 +327,7 @@ const Contact = () => {
                 <CardIcon><FaEnvelope /></CardIcon>
                 <CardContent>
                   <h4>Email</h4>
-                  <p>your.email@example.com</p>
+                  <p>abdullahejaz512@gmail.com</p>
                 </CardContent>
               </ContactCard>
 
@@ -335,7 +335,7 @@ const Contact = () => {
                 <CardIcon><HiPhone /></CardIcon>
                 <CardContent>
                   <h4>Phone</h4>
-                  <p>+1 (234) 567-8900</p>
+                  <p>+92 336 5140129</p>
                 </CardContent>
               </ContactCard>
 
@@ -349,14 +349,11 @@ const Contact = () => {
             </ContactCards>
 
             <SocialLinks>
-              <SocialLink href="https://github.com" target="_blank" whileHover={{ y: -5 }}>
+              <SocialLink href="https://github.com/AbdullahEjaz512" target="_blank" whileHover={{ y: -5 }}>
                 <FaGithub />
               </SocialLink>
-              <SocialLink href="https://linkedin.com" target="_blank" whileHover={{ y: -5 }}>
+              <SocialLink href="https://www.linkedin.com/in/abdullah-ejaz-7b4791311" target="_blank" whileHover={{ y: -5 }}>
                 <FaLinkedin />
-              </SocialLink>
-              <SocialLink href="https://twitter.com" target="_blank" whileHover={{ y: -5 }}>
-                <FaTwitter />
               </SocialLink>
             </SocialLinks>
           </ContactInfo>

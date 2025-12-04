@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import { FaGithub, FaLinkedin, FaTwitter, FaDownload } from 'react-icons/fa';
+import { FaGithub, FaLinkedin, FaDownload } from 'react-icons/fa';
 import { HiArrowDown } from 'react-icons/hi';
 import profileImage from '../assets/profile.png';
 
@@ -227,62 +227,6 @@ const ProfileImage = styled.img`
   box-shadow: ${({ theme }) => theme.shadows.glowStrong};
 `;
 
-const FloatingBadge = styled(motion.div)`
-  position: absolute;
-  background: ${({ theme }) => theme.colors.card};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 16px;
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  box-shadow: ${({ theme }) => theme.shadows.medium};
-
-  &.experience {
-    top: 20px;
-    right: -30px;
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      right: -10px;
-      top: 10px;
-    }
-  }
-
-  &.projects {
-    bottom: 40px;
-    left: -40px;
-
-    @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-      left: -10px;
-      bottom: 20px;
-    }
-  }
-`;
-
-const BadgeIcon = styled.div`
-  width: 45px;
-  height: 45px;
-  border-radius: 12px;
-  background: ${({ theme }) => theme.colors.gradient};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-`;
-
-const BadgeContent = styled.div`
-  h4 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: ${({ theme }) => theme.colors.text};
-  }
-
-  p {
-    font-size: 0.85rem;
-    color: ${({ theme }) => theme.colors.textSecondary};
-  }
-`;
-
 const ScrollIndicator = styled(motion.a)`
   position: absolute;
   bottom: 30px;
@@ -349,7 +293,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <span>AI Developer</span>
+            <span>Abdullah Ejaz</span>
           </Name>
 
           <TypedWrapper>
@@ -407,25 +351,18 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.5 }}
           >
             <SocialLink
-              href="https://github.com"
+              href="https://github.com/AbdullahEjaz512"
               target="_blank"
               whileHover={{ y: -5 }}
             >
               <FaGithub />
             </SocialLink>
             <SocialLink
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/abdullah-ejaz-7b4791311"
               target="_blank"
               whileHover={{ y: -5 }}
             >
               <FaLinkedin />
-            </SocialLink>
-            <SocialLink
-              href="https://twitter.com"
-              target="_blank"
-              whileHover={{ y: -5 }}
-            >
-              <FaTwitter />
             </SocialLink>
           </SocialLinks>
         </HeroContent>
@@ -437,32 +374,6 @@ const Hero = () => {
         >
           <ImageContainer>
             <ProfileImage src={profileImage} alt="Profile" />
-            
-            {/* <FloatingBadge
-              className="experience"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.8 }}
-            >
-              <BadgeIcon>🎯</BadgeIcon>
-              <BadgeContent className='block lg:hidden'  >
-                <h4>3+ Years</h4>
-                <p>Experience</p>
-              </BadgeContent>
-            </FloatingBadge> */}
-
-            {/* <FloatingBadge
-              className="projects"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 1 }}
-            >
-              <BadgeIcon>🚀</BadgeIcon>
-              <BadgeContent>
-                <h4>20+</h4>
-                <p>Projects Done</p>
-              </BadgeContent>
-            </FloatingBadge> */}
           </ImageContainer>
         </HeroImageWrapper>
       </HeroContainer>
