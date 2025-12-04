@@ -11,7 +11,7 @@ const ParticleCanvas = styled.canvas`
   pointer-events: none;
 `;
 
-const ParticleBackground = () => {
+const ParticleBackground = ({ isDarkMode }) => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -19,6 +19,9 @@ const ParticleBackground = () => {
     const ctx = canvas.getContext('2d');
     let animationFrameId;
     let particles = [];
+
+    // Colors based on theme
+    const particleColor = isDarkMode ? '99, 102, 241' : '34, 197, 94';
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -58,7 +61,7 @@ const ParticleBackground = () => {
         // Draw particle
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(99, 102, 241, ${particle.opacity})`;
+        ctx.fillStyle = `rgba(${particleColor}, ${particle.opacity})`;
         ctx.fill();
 
         // Draw connections
@@ -72,7 +75,7 @@ const ParticleBackground = () => {
             ctx.beginPath();
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(particle2.x, particle2.y);
-            ctx.strokeStyle = `rgba(99, 102, 241, ${0.1 * (1 - distance / 150)})`;
+            ctx.strokeStyle = `rgba(${particleColor}, ${0.1 * (1 - distance / 150)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -95,7 +98,7 @@ const ParticleBackground = () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, []);
+  }, [isDarkMode]);
 
   return <ParticleCanvas ref={canvasRef} />;
 };

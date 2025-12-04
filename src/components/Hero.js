@@ -349,7 +349,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            An <span>AI Developer</span>
+            <span>AI Developer</span>
           </Name>
 
           <TypedWrapper>
@@ -438,20 +438,20 @@ const Hero = () => {
           <ImageContainer>
             <ProfileImage src={profileImage} alt="Profile" />
             
-            <FloatingBadge
+            {/* <FloatingBadge
               className="experience"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.8 }}
             >
               <BadgeIcon>🎯</BadgeIcon>
-              <BadgeContent>
+              <BadgeContent className='block lg:hidden'  >
                 <h4>3+ Years</h4>
                 <p>Experience</p>
               </BadgeContent>
-            </FloatingBadge>
+            </FloatingBadge> */}
 
-            <FloatingBadge
+            {/* <FloatingBadge
               className="projects"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
@@ -462,7 +462,7 @@ const Hero = () => {
                 <h4>20+</h4>
                 <p>Projects Done</p>
               </BadgeContent>
-            </FloatingBadge>
+            </FloatingBadge> */}
           </ImageContainer>
         </HeroImageWrapper>
       </HeroContainer>

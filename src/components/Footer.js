@@ -164,7 +164,7 @@ const Footer = () => {
       <Container>
         <FooterContent>
           <FooterBrand>
-            <Logo href="#home">AI.Dev</Logo>
+            <Logo href="#home">Abudllah Ejaz</Logo>
             <BrandDescription>
               Passionate AI Developer specializing in Machine Learning, 
               Deep Learning, and Computer Vision. Turning complex problems 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiMenu, HiX } from 'react-icons/hi';
+import { HiMenu, HiX, HiSun, HiMoon } from 'react-icons/hi';
 
 const Nav = styled(motion.nav)`
   position: fixed;
@@ -11,8 +11,8 @@ const Nav = styled(motion.nav)`
   z-index: 1000;
   padding: 20px 0;
   transition: all 0.3s ease;
-  background: ${({ scrolled }) => 
-    scrolled ? 'rgba(10, 10, 15, 0.95)' : 'transparent'};
+  background: ${({ scrolled, theme }) => 
+    scrolled ? theme.colors.navBackground : 'transparent'};
   backdrop-filter: ${({ scrolled }) => scrolled ? 'blur(20px)' : 'none'};
   border-bottom: ${({ scrolled, theme }) => 
     scrolled ? `1px solid ${theme.colors.border}` : 'none'};
@@ -110,7 +110,7 @@ const MobileMenu = styled(motion.div)`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(10, 10, 15, 0.98);
+  background: ${({ theme }) => theme.colors.mobileMenuBg};
   backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
@@ -127,6 +127,28 @@ const MobileNavLink = styled(motion.a)`
   cursor: pointer;
 `;
 
+const ThemeToggle = styled(motion.button)`
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background: ${({ theme }) => theme.colors.backgroundSecondary};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  color: ${({ theme }) => theme.colors.text};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.primaryLight};
+    border-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primary};
+    transform: rotate(15deg);
+  }
+`;
+
 const navItems = [
   { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
@@ -136,7 +158,7 @@ const navItems = [
   { name: 'Contact', href: '#contact' },
 ];
 
-const Navbar = () => {
+const Navbar = ({ toggleTheme, isDarkMode }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -162,7 +184,7 @@ const Navbar = () => {
     >
       <NavContainer>
         <Logo href="#home" whileHover={{ scale: 1.05 }}>
-          AI.Dev
+          Ab.Ejaz
         </Logo>
 
         <NavLinks>
@@ -175,6 +197,14 @@ const Navbar = () => {
               {item.name}
             </NavLink>
           ))}
+          <ThemeToggle
+            onClick={toggleTheme}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {isDarkMode ? <HiSun /> : <HiMoon />}
+          </ThemeToggle>
           <HireButton
             href="#contact"
             whileHover={{ scale: 1.05 }}
@@ -208,6 +238,13 @@ const Navbar = () => {
                 {item.name}
               </MobileNavLink>
             ))}
+            <ThemeToggle
+              onClick={toggleTheme}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              {isDarkMode ? <HiSun /> : <HiMoon />}
+            </ThemeToggle>
             <HireButton
               href="#contact"
               onClick={handleLinkClick}
