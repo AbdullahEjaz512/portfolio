@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Dependencies
 node_modules/
 venv/
@@ -15,3 +16,12 @@ Thumbs.db
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+=======
+node_modules/
+dist/
+dist.zip
+.env
+.DS_Store
+*.log
+.vscode/settings.json
+>>>>>>> 1a0c9949427cdb51b952b73fd783cf25d24f6290
