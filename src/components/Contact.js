@@ -275,7 +275,7 @@ const Contact = () => {
 
   useEffect(() => {
     // Initialize EmailJS with public key
-    emailjs.init('4CxKFYJxwBkUg07hP');
+    emailjs.init('TMkHpiNkuP0GscX0t');
   }, []);
 
   const handleChange = (e) => {
@@ -288,8 +288,8 @@ const Contact = () => {
 
     // EmailJS configuration
     emailjs.sendForm(
-      'service_l1abogf',
-      'template_l9p5v7j',
+      'service_hewemte',
+      'template_og33xbe',
       formRef.current
     )
       .then((result) => {
