@@ -283,6 +283,7 @@ const projects = [
     featured: false,
     filter: 'ai',
     github: 'https://github.com/AbdullahEjaz512/resume-builder-job-agent-extension',
+    demo: 'https://resume-builder-job-agent-extension.vercel.app/',
   },
   {
     id: 6,
@@ -294,6 +295,7 @@ const projects = [
     featured: false,
     filter: 'web',
     github: 'https://github.com/AbdullahEjaz512/E-Dashboard',
+    demo: 'https://e-dashboard-6c6i.vercel.app/',
   },
   {
     id: 7,
