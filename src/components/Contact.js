@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
 import { FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaGithub, FaLinkedin } from 'react-icons/fa';
@@ -273,6 +273,11 @@ const Contact = () => {
   });
   const [isSending, setIsSending] = useState(false);
 
+  useEffect(() => {
+    // Initialize EmailJS with public key
+    emailjs.init('4CxKFYJxwBkUg07hP');
+  }, []);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -285,8 +290,7 @@ const Contact = () => {
     emailjs.sendForm(
       'service_l1abogf',
       'template_l9p5v7j',
-      formRef.current,
-      '4CxKFYJxwBkUg07hP'
+      formRef.current
     )
       .then((result) => {
         console.log('Email sent successfully:', result.text);
