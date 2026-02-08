@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
 import { FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { HiPhone } from 'react-icons/hi';
+import emailjs from '@emailjs/browser';
 
 const ContactSection = styled.section`
   background: ${({ theme }) => theme.colors.backgroundSecondary};
@@ -262,6 +263,7 @@ const SubmitButton = styled(motion.button)`
 
 const Contact = () => {
   const ref = useRef(null);
+  const formRef = useRef();
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const [formData, setFormData] = useState({
     name: '',
@@ -269,6 +271,7 @@ const Contact = () => {
     subject: '',
     message: '',
   });
+  const [isSending, setIsSending] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -276,10 +279,25 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
-    alert('Thank you for your message! I will get back to you soon.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    setIsSending(true);
+
+    // EmailJS configuration
+    emailjs.sendForm(
+      'service_l1abogf',
+      'template_l9p5v7j',
+      formRef.current,
+      '4CxKFYJxwBkUg07hP'
+    )
+      .then((result) => {
+        console.log('Email sent successfully:', result.text);
+        alert('Thank you for your message! I will get back to you soon.');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        setIsSending(false);
+      }, (error) => {
+        console.error('EmailJS Error:', error);
+        alert('Failed to send message. Please try again or email me directly at abdullahejaz512@gmail.com');
+        setIsSending(false);
+      });
   };
 
   return (
@@ -359,6 +377,7 @@ const Contact = () => {
           </ContactInfo>
 
           <ContactForm
+            ref={formRef}
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.7 }}
@@ -415,9 +434,9 @@ const Contact = () => {
             <SubmitButton
               type="submit"
               whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              disabled={isSending}
             >
-              <FaPaperPlane /> Send Message
+              <FaPaperPlane /> {isSending ? 'Sending...' : 'Send Message'}
             </SubmitButton>
           </ContactForm>
         </ContactGrid>
