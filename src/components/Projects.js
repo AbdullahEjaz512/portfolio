@@ -400,14 +400,16 @@ const Projects = () => {
                         >
                           <FaGithub />
                         </OverlayButton>
-                        <OverlayButton
-                          href={project.demo}
-                          target="_blank"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <FaExternalLinkAlt />
-                        </OverlayButton>
+                        {project.demo && project.demo !== '#' && (
+                          <OverlayButton
+                            href={project.demo}
+                            target="_blank"
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
+                            <FaExternalLinkAlt />
+                          </OverlayButton>
+                        )}
                       </ProjectOverlay>
                     )}
                   </AnimatePresence>
