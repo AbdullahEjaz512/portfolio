@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaBrain, FaEye, FaChartLine } from 'react-icons/fa';
+import { FaGithub, FaExternalLinkAlt, FaBrain, FaChartLine } from 'react-icons/fa';
 import { HiSparkles } from 'react-icons/hi';
 // Updated: January 14, 2026
 
