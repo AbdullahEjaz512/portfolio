@@ -264,17 +264,6 @@ const projects = [
   },
   {
     id: 4,
-    title: 'Medi-Cora',
-    category: 'Healthcare AI',
-    description: 'AI-powered healthcare platform for medical diagnosis and patient care optimization. Integrates machine learning models for intelligent health monitoring.',
-    tech: ['Python', 'Machine Learning', 'Healthcare AI', 'Data Analytics'],
-    icon: <FaBrain />,
-    featured: false,
-    filter: 'ai',
-    github: 'https://github.com/AbdullahEjaz512/Medi-Cora',
-  },
-  {
-    id: 5,
     title: 'All-in-One Job Agent',
     category: 'GenAI & Automation',
     description: 'Agentic AI system utilizing local LLMs (Ollama) to autonomously generate context-aware professional documents. Includes autonomous browsing and ATS optimization engine.',
@@ -286,7 +275,7 @@ const projects = [
     demo: 'https://resume-builder-job-agent-extension.vercel.app/',
   },
   {
-    id: 6,
+    id: 5,
     title: 'E-Commerce Dashboard',
     category: 'Web Development',
     description: 'Full-stack e-commerce analytics dashboard with real-time insights, inventory management, and AI-powered demand forecasting.',
@@ -298,7 +287,7 @@ const projects = [
     demo: 'https://e-dashboard-6c6i.vercel.app/',
   },
   {
-    id: 7,
+    id: 6,
     title: 'Aztrosys Full-Stack Platform',
     category: 'Web Development',
     description: 'Full-stack web platform with modern UI/UX design and comprehensive backend infrastructure. Built with scalability and performance in mind.',
