@@ -7,42 +7,39 @@ import emailjs from '@emailjs/browser';
 
 const ContactSection = styled.section`
   background: ${({ theme }) => theme.colors.backgroundSecondary};
-  position: relative;
-  overflow: hidden;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 `;
 
 const SectionHeader = styled.div`
-  text-align: center;
   margin-bottom: 60px;
+  max-width: 800px;
 `;
 
 const SectionTag = styled(motion.span)`
+  font-family: ${({ theme }) => theme.fonts.code};
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.secondary};
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
   display: inline-block;
-  padding: 8px 20px;
-  background: ${({ theme }) => theme.colors.primaryLight};
-  color: ${({ theme }) => theme.colors.primary};
-  border-radius: 30px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 20px;
 `;
 
 const SectionTitle = styled(motion.h2)`
+  font-family: ${({ theme }) => theme.fonts.display};
   font-size: 2.8rem;
   font-weight: 800;
-  margin-bottom: 15px;
+  color: ${({ theme }) => theme.colors.text};
+  letter-spacing: -0.03em;
 
   span {
-    background: ${({ theme }) => theme.colors.gradient};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: ${({ theme }) => theme.colors.secondary};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -50,120 +47,119 @@ const SectionTitle = styled(motion.h2)`
   }
 `;
 
-const SectionSubtitle = styled(motion.p)`
-  font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  max-width: 600px;
-  margin: 0 auto;
-`;
-
 const ContactGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 50px;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 64px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
 `;
 
 const ContactInfo = styled(motion.div)``;
 
 const InfoTitle = styled.h3`
+  font-family: ${({ theme }) => theme.fonts.display};
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
 const InfoText = styled.p`
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: ${({ theme }) => theme.colors.textSecondary};
-  line-height: 1.8;
-  margin-bottom: 35px;
+  line-height: 1.7;
+  margin-bottom: 32px;
 `;
 
 const ContactCards = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-bottom: 40px;
+  gap: 16px;
+  margin-bottom: 32px;
 `;
 
 const ContactCard = styled(motion.div)`
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 16px;
   padding: 20px;
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 16px;
-  transition: all 0.3s ease;
+  border-radius: 0px;
+  transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    transform: translateX(10px);
+    border-color: ${({ theme }) => theme.colors.borderHover};
+    background: ${({ theme }) => theme.colors.backgroundSecondary};
   }
 `;
 
 const CardIcon = styled.div`
-  width: 55px;
-  height: 55px;
-  min-width: 55px;
-  border-radius: 14px;
-  background: ${({ theme }) => theme.colors.gradient};
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: ${({ theme }) => theme.colors.backgroundSecondary};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
-  color: white;
+  font-size: 1.1rem;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const CardContent = styled.div`
   h4 {
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: ${({ theme }) => theme.fonts.display};
+    font-size: 0.95rem;
+    font-weight: 700;
     color: ${({ theme }) => theme.colors.text};
-    margin-bottom: 5px;
+    margin-bottom: 4px;
   }
 
   p {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     color: ${({ theme }) => theme.colors.textSecondary};
   }
 `;
 
 const SocialLinks = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 12px;
 `;
 
 const SocialLink = styled(motion.a)`
-  width: 50px;
-  height: 50px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 12px;
+  border-radius: 0px;
   color: ${({ theme }) => theme.colors.textSecondary};
-  font-size: 1.3rem;
-  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    color: white;
-    background: ${({ theme }) => theme.colors.gradient};
-    border-color: transparent;
-    transform: translateY(-5px);
+    color: ${({ theme }) => theme.colors.text};
+    border-color: ${({ theme }) => theme.colors.text};
+    background: ${({ theme }) => theme.colors.backgroundSecondary};
   }
 `;
 
 const ContactForm = styled(motion.form)`
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 24px;
+  border-radius: 0px;
   padding: 40px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: 24px;
+  }
 `;
 
 const FormRow = styled.div`
@@ -183,27 +179,30 @@ const FormGroup = styled.div`
 
 const Label = styled.label`
   display: block;
-  font-size: 0.95rem;
+  font-family: ${({ theme }) => theme.fonts.code};
+  font-size: 0.8rem;
   font-weight: 600;
-  color: ${({ theme }) => theme.colors.text};
-  margin-bottom: 10px;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 16px 20px;
+  padding: 12px 16px;
   background: ${({ theme }) => theme.colors.backgroundSecondary};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 12px;
-  font-size: 1rem;
+  border-radius: 0px;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.text};
-  transition: all 0.3s ease;
+  transition: all ${({ theme }) => theme.transitions.fast};
   font-family: inherit;
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.primaryLight};
+    background: ${({ theme }) => theme.colors.card};
   }
 
   &::placeholder {
@@ -213,21 +212,21 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
   width: 100%;
-  padding: 16px 20px;
+  padding: 12px 16px;
   background: ${({ theme }) => theme.colors.backgroundSecondary};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 12px;
-  font-size: 1rem;
+  border-radius: 0px;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.text};
-  transition: all 0.3s ease;
+  transition: all ${({ theme }) => theme.transitions.fast};
   font-family: inherit;
   resize: vertical;
-  min-height: 150px;
+  min-height: 140px;
 
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.primary};
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.colors.primaryLight};
+    background: ${({ theme }) => theme.colors.card};
   }
 
   &::placeholder {
@@ -241,22 +240,25 @@ const SubmitButton = styled(motion.button)`
   justify-content: center;
   gap: 10px;
   width: 100%;
-  padding: 18px 40px;
-  background: ${({ theme }) => theme.colors.gradient};
-  color: white;
-  font-size: 1.1rem;
+  padding: 14px 28px;
+  background: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.background};
+  font-size: 0.85rem;
   font-weight: 600;
-  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid ${({ theme }) => theme.colors.text};
+  border-radius: 0px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: ${({ theme }) => theme.shadows.glow};
+    background: transparent;
+    color: ${({ theme }) => theme.colors.text};
   }
 
   &:disabled {
-    opacity: 0.7;
+    opacity: 0.5;
     cursor: not-allowed;
   }
 `;
@@ -309,72 +311,64 @@ const Contact = () => {
       <Container>
         <SectionHeader>
           <SectionTag
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
           >
-            Get In Touch
+            [05 / CONTACT_PORT]
           </SectionTag>
           <SectionTitle
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.08 }}
           >
-            Let's <span>Connect</span>
+            Initiate <span>Collaboration</span>
           </SectionTitle>
-          <SectionSubtitle
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Have a project in mind? Let's discuss how we can work together
-          </SectionSubtitle>
         </SectionHeader>
 
         <ContactGrid>
           <ContactInfo
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5 }}
           >
-            <InfoTitle>Let's Talk About Your Project</InfoTitle>
+            <InfoTitle>Establish Communications</InfoTitle>
             <InfoText>
-              I'm always excited to work on new projects and collaborate with 
-              amazing people. Whether you need an AI solution, a web application, 
-              or just want to chat about technology, feel free to reach out!
+              Seeking opportunities to deploy medical computer vision networks, custom retrieval-augmented generation agents, 
+              or performant, SEO-tuned React web platforms. Contact me via the secure pipeline or directly via standard channels.
             </InfoText>
 
             <ContactCards>
-              <ContactCard whileHover={{ x: 10 }}>
+              <ContactCard>
                 <CardIcon><FaEnvelope /></CardIcon>
                 <CardContent>
-                  <h4>Email</h4>
+                  <h4>Direct Mail</h4>
                   <p>abdullahejaz512@gmail.com</p>
                 </CardContent>
               </ContactCard>
 
-              <ContactCard whileHover={{ x: 10 }}>
+              <ContactCard>
                 <CardIcon><HiPhone /></CardIcon>
                 <CardContent>
-                  <h4>Phone</h4>
+                  <h4>Telephone Interface</h4>
                   <p>+92 336 5140129</p>
                 </CardContent>
               </ContactCard>
 
-              <ContactCard whileHover={{ x: 10 }}>
+              <ContactCard>
                 <CardIcon><FaMapMarkerAlt /></CardIcon>
                 <CardContent>
-                  <h4>Location</h4>
-                  <p>Available for Remote Work</p>
+                  <h4>Operations Base</h4>
+                  <p>Available for Global Remote Operations</p>
                 </CardContent>
               </ContactCard>
             </ContactCards>
 
             <SocialLinks>
-              <SocialLink href="https://github.com/AbdullahEjaz512" target="_blank" whileHover={{ y: -5 }}>
+              <SocialLink href="https://github.com/AbdullahEjaz512" target="_blank">
                 <FaGithub />
               </SocialLink>
-              <SocialLink href="https://www.linkedin.com/in/abdullah-ejaz-7b4791311" target="_blank" whileHover={{ y: -5 }}>
+              <SocialLink href="https://www.linkedin.com/in/abdullah-ejaz-7b4791311" target="_blank">
                 <FaLinkedin />
               </SocialLink>
             </SocialLinks>
@@ -382,29 +376,29 @@ const Contact = () => {
 
           <ContactForm
             ref={formRef}
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
             onSubmit={handleSubmit}
           >
             <FormRow>
               <FormGroup>
-                <Label>Your Name</Label>
+                <Label>User Name</Label>
                 <Input
                   type="text"
                   name="name"
-                  placeholder="John Doe"
+                  placeholder="e.g. John Doe"
                   value={formData.name}
                   onChange={handleChange}
                   required
                 />
               </FormGroup>
               <FormGroup>
-                <Label>Your Email</Label>
+                <Label>User Email</Label>
                 <Input
                   type="email"
                   name="email"
-                  placeholder="john@example.com"
+                  placeholder="e.g. john@example.com"
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -413,11 +407,11 @@ const Contact = () => {
             </FormRow>
 
             <FormGroup>
-              <Label>Subject</Label>
+              <Label>Subject Line</Label>
               <Input
                 type="text"
                 name="subject"
-                placeholder="Project Discussion"
+                placeholder="e.g. Project Integration"
                 value={formData.subject}
                 onChange={handleChange}
                 required
@@ -425,10 +419,10 @@ const Contact = () => {
             </FormGroup>
 
             <FormGroup>
-              <Label>Message</Label>
+              <Label>Detailed Message</Label>
               <TextArea
                 name="message"
-                placeholder="Tell me about your project..."
+                placeholder="Describe your technical specifications..."
                 value={formData.message}
                 onChange={handleChange}
                 required
@@ -437,10 +431,11 @@ const Contact = () => {
 
             <SubmitButton
               type="submit"
-              whileHover={{ scale: 1.02 }}
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
               disabled={isSending}
             >
-              <FaPaperPlane /> {isSending ? 'Sending...' : 'Send Message'}
+              <FaPaperPlane /> {isSending ? 'Sending Transmission...' : 'Submit Transmission'}
             </SubmitButton>
           </ContactForm>
         </ContactGrid>
@@ -450,3 +445,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

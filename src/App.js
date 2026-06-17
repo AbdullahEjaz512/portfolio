@@ -10,7 +10,6 @@ import Projects from './components/Projects';
 import Services from './components/Services';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import ParticleBackground from './components/ParticleBackground';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -29,7 +28,6 @@ function App() {
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <GlobalStyles />
-      <ParticleBackground isDarkMode={isDarkMode} />
       <Navbar toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
       <Hero />
       <About />
@@ -43,3 +41,4 @@ function App() {
 }
 
 export default App;
+

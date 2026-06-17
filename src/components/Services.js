@@ -5,42 +5,39 @@ import { FaBrain, FaCode, FaRobot, FaChartLine, FaDatabase, FaCloud } from 'reac
 import { HiArrowRight } from 'react-icons/hi';
 
 const ServicesSection = styled.section`
-  position: relative;
-  overflow: hidden;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 `;
 
 const SectionHeader = styled.div`
-  text-align: center;
   margin-bottom: 60px;
+  max-width: 800px;
 `;
 
 const SectionTag = styled(motion.span)`
+  font-family: ${({ theme }) => theme.fonts.code};
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.secondary};
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
   display: inline-block;
-  padding: 8px 20px;
-  background: ${({ theme }) => theme.colors.primaryLight};
-  color: ${({ theme }) => theme.colors.primary};
-  border-radius: 30px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 20px;
 `;
 
 const SectionTitle = styled(motion.h2)`
+  font-family: ${({ theme }) => theme.fonts.display};
   font-size: 2.8rem;
   font-weight: 800;
-  margin-bottom: 15px;
+  color: ${({ theme }) => theme.colors.text};
+  letter-spacing: -0.03em;
 
   span {
-    background: ${({ theme }) => theme.colors.gradient};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: ${({ theme }) => theme.colors.secondary};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -48,17 +45,10 @@ const SectionTitle = styled(motion.h2)`
   }
 `;
 
-const SectionSubtitle = styled(motion.p)`
-  font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  max-width: 600px;
-  margin: 0 auto;
-`;
-
 const ServicesGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 32px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: repeat(2, 1fr);
@@ -72,93 +62,89 @@ const ServicesGrid = styled.div`
 const ServiceCard = styled(motion.div)`
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 20px;
-  padding: 35px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: ${({ theme }) => theme.colors.gradient};
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-  }
+  border-radius: 0px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    transform: translateY(-10px);
-    box-shadow: ${({ theme }) => theme.shadows.glow};
-
-    &::before {
-      transform: scaleX(1);
-    }
+    border-color: ${({ theme }) => theme.colors.borderHover};
+    background: ${({ theme }) => theme.colors.backgroundSecondary};
   }
 `;
 
 const ServiceIcon = styled.div`
-  width: 70px;
-  height: 70px;
-  border-radius: 16px;
-  background: ${({ theme }) => theme.colors.gradient};
+  width: 52px;
+  height: 52px;
+  background: ${({ theme }) => theme.colors.backgroundSecondary};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
-  color: white;
-  margin-bottom: 25px;
+  font-size: 1.3rem;
+  color: ${({ theme }) => theme.colors.secondary};
+  margin-bottom: 24px;
 `;
 
 const ServiceTitle = styled.h3`
-  font-size: 1.4rem;
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: 1.25rem;
   font-weight: 700;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
 const ServiceDescription = styled.p`
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: ${({ theme }) => theme.colors.textSecondary};
-  line-height: 1.7;
+  line-height: 1.6;
   margin-bottom: 20px;
 `;
 
 const ServiceFeatures = styled.ul`
-  margin-bottom: 25px;
+  margin-bottom: auto;
+  padding-top: 16px;
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 const ServiceFeature = styled.li`
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 0.9rem;
+  gap: 8px;
+  font-family: ${({ theme }) => theme.fonts.primary};
+  font-size: 0.85rem;
   color: ${({ theme }) => theme.colors.textSecondary};
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 
   &::before {
-    content: '✓';
-    color: ${({ theme }) => theme.colors.primary};
-    font-weight: 600;
+    content: '//';
+    font-family: ${({ theme }) => theme.fonts.code};
+    color: ${({ theme }) => theme.colors.secondary};
+    font-size: 0.8rem;
+    font-weight: bold;
   }
 `;
 
 const ServiceLink = styled(motion.a)`
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: ${({ theme }) => theme.colors.primary};
-  font-weight: 600;
-  font-size: 0.95rem;
+  gap: 6px;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.code};
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: gap 0.3s ease;
+  margin-top: 24px;
+  transition: gap ${({ theme }) => theme.transitions.fast};
+
+  svg {
+    font-size: 0.95rem;
+  }
 
   &:hover {
-    gap: 12px;
+    color: ${({ theme }) => theme.colors.secondary};
   }
 `;
 
@@ -176,7 +162,7 @@ const services = [
   },
   {
     icon: <FaRobot />,
-    title: 'Computer Vision',
+    title: 'Computer Vision Systems',
     description: 'Advanced image and video analysis systems for object detection, segmentation, and recognition.',
     features: [
       'Object detection & tracking',
@@ -240,36 +226,29 @@ const Services = () => {
       <Container>
         <SectionHeader>
           <SectionTag
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
           >
-            What I Offer
+            [03 / CAPABILITIES]
           </SectionTag>
           <SectionTitle
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.08 }}
           >
-            My <span>Services</span>
+            Services & <span>Expertise</span>
           </SectionTitle>
-          <SectionSubtitle
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Comprehensive AI and development services to transform your ideas into reality
-          </SectionSubtitle>
         </SectionHeader>
 
         <ServicesGrid>
           {services.map((service, index) => (
             <ServiceCard
               key={service.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: 0.1 * index }}
-              whileHover={{ y: -10 }}
+              transition={{ duration: 0.4, delay: 0.08 * index }}
+              whileHover={{ y: -4 }}
             >
               <ServiceIcon>{service.icon}</ServiceIcon>
               <ServiceTitle>{service.title}</ServiceTitle>
@@ -291,3 +270,4 @@ const Services = () => {
 };
 
 export default Services;
+

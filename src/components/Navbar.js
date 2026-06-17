@@ -9,37 +9,41 @@ const Nav = styled(motion.nav)`
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 20px 0;
-  transition: all 0.3s ease;
+  padding: 18px 0;
+  transition: all ${({ theme }) => theme.transitions.normal};
   background: ${({ scrolled, theme }) => 
-    scrolled ? theme.colors.navBackground : 'transparent'};
-  backdrop-filter: ${({ scrolled }) => scrolled ? 'blur(20px)' : 'none'};
-  border-bottom: ${({ scrolled, theme }) => 
-    scrolled ? `1px solid ${theme.colors.border}` : 'none'};
+    scrolled ? theme.colors.navBackground : 'rgba(9, 10, 15, 0.4)'};
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid ${({ scrolled, theme }) => 
+    scrolled ? theme.colors.border : 'rgba(30, 32, 43, 0.3)'};
 `;
 
 const NavContainer = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
 const Logo = styled(motion.a)`
-  font-size: 1.8rem;
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: 1.4rem;
   font-weight: 800;
-  background: ${({ theme }) => theme.colors.gradient};
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: ${({ theme }) => theme.colors.text};
+  letter-spacing: -0.03em;
   cursor: pointer;
+
+  span {
+    color: ${({ theme }) => theme.colors.secondary};
+  }
 `;
 
 const NavLinks = styled.ul`
   display: flex;
-  gap: 40px;
+  gap: 32px;
   align-items: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -48,45 +52,36 @@ const NavLinks = styled.ul`
 `;
 
 const NavLink = styled(motion.a)`
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.textSecondary};
-  transition: color 0.3s ease;
-  position: relative;
+  transition: color ${({ theme }) => theme.transitions.fast};
   cursor: pointer;
-
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: ${({ theme }) => theme.colors.gradient};
-    transition: width 0.3s ease;
-  }
+  position: relative;
+  padding: 4px 0;
 
   &:hover {
     color: ${({ theme }) => theme.colors.text};
-
-    &:after {
-      width: 100%;
-    }
   }
 `;
 
 const HireButton = styled(motion.a)`
-  padding: 12px 28px;
-  background: ${({ theme }) => theme.colors.gradient};
-  color: white;
-  font-weight: 600;
-  border-radius: 8px;
+  padding: 10px 22px;
+  background: transparent;
+  color: ${({ theme }) => theme.colors.text};
+  font-weight: 500;
+  font-size: 0.85rem;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 0px; /* Sharp Industrial Corners */
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: ${({ theme }) => theme.shadows.glow};
+    border-color: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.primaryLight};
+    color: ${({ theme }) => theme.colors.text};
   }
 `;
 
@@ -94,7 +89,7 @@ const MobileMenuButton = styled.button`
   display: none;
   background: none;
   color: ${({ theme }) => theme.colors.text};
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   z-index: 1001;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -107,7 +102,7 @@ const MobileMenuButton = styled.button`
 const MobileControls = styled.div`
   display: none;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: flex;
@@ -115,23 +110,22 @@ const MobileControls = styled.div`
 `;
 
 const MobileThemeToggle = styled(motion.button)`
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: ${({ theme }) => theme.colors.backgroundSecondary};
+  width: 38px;
+  height: 38px;
+  border-radius: 0px; /* Sharp corners */
+  background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
   color: ${({ theme }) => theme.colors.text};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
     background: ${({ theme }) => theme.colors.primaryLight};
     border-color: ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.primary};
   }
 `;
 
@@ -143,40 +137,41 @@ const MobileMenu = styled(motion.div)`
   bottom: 0;
   background: ${({ theme }) => theme.colors.mobileMenuBg};
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 24px;
   z-index: 999;
 `;
 
 const MobileNavLink = styled(motion.a)`
-  font-size: 1.5rem;
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: 1.6rem;
   font-weight: 600;
   color: ${({ theme }) => theme.colors.text};
   cursor: pointer;
 `;
 
 const ThemeToggle = styled(motion.button)`
-  width: 45px;
-  height: 45px;
-  border-radius: 12px;
-  background: ${({ theme }) => theme.colors.backgroundSecondary};
+  width: 38px;
+  height: 38px;
+  border-radius: 0px; /* Sharp corners */
+  background: transparent;
   border: 1px solid ${({ theme }) => theme.colors.border};
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.textSecondary};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    background: ${({ theme }) => theme.colors.primaryLight};
     border-color: ${({ theme }) => theme.colors.primary};
     color: ${({ theme }) => theme.colors.primary};
-    transform: rotate(15deg);
+    background: ${({ theme }) => theme.colors.primaryLight};
   }
 `;
 
@@ -211,11 +206,11 @@ const Navbar = ({ toggleTheme, isDarkMode }) => {
       scrolled={scrolled}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
     >
       <NavContainer>
-        <Logo href="#home" whileHover={{ scale: 1.05 }}>
-          Ab.Ejaz
+        <Logo href="#home">
+          Abdullah<span>.</span>Ejaz
         </Logo>
 
         <NavLinks>
@@ -223,23 +218,22 @@ const Navbar = ({ toggleTheme, isDarkMode }) => {
             <NavLink
               key={item.name}
               href={item.href}
-              whileHover={{ y: -2 }}
+              whileHover={{ y: -1 }}
             >
               {item.name}
             </NavLink>
           ))}
           <ThemeToggle
             onClick={toggleTheme}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: 0.95 }}
             title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
             {isDarkMode ? <HiSun /> : <HiMoon />}
           </ThemeToggle>
           <HireButton
             href="#contact"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
           >
             Hire Me
           </HireButton>
@@ -248,8 +242,7 @@ const Navbar = ({ toggleTheme, isDarkMode }) => {
         <MobileControls>
           <MobileThemeToggle
             onClick={toggleTheme}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: 0.95 }}
             title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
             {isDarkMode ? <HiSun /> : <HiMoon />}
@@ -263,18 +256,19 @@ const Navbar = ({ toggleTheme, isDarkMode }) => {
       <AnimatePresence>
         {mobileMenuOpen && (
           <MobileMenu
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
           >
             {navItems.map((item, index) => (
               <MobileNavLink
                 key={item.name}
                 href={item.href}
                 onClick={handleLinkClick}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.05 }}
               >
                 {item.name}
               </MobileNavLink>
@@ -282,7 +276,8 @@ const Navbar = ({ toggleTheme, isDarkMode }) => {
             <HireButton
               href="#contact"
               onClick={handleLinkClick}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.98 }}
+              style={{ marginTop: '16px' }}
             >
               Hire Me
             </HireButton>

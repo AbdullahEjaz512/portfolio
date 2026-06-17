@@ -1,48 +1,44 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
-import { FaGithub, FaExternalLinkAlt, FaBrain, FaChartLine } from 'react-icons/fa';
-import { HiSparkles } from 'react-icons/hi';
-// Updated: January 14, 2026
+import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { FaCodeBranch } from 'react-icons/fa';
+import { HiArrowSmRight } from 'react-icons/hi';
 
 const ProjectsSection = styled.section`
-  background: ${({ theme }) => theme.colors.backgroundSecondary};
-  position: relative;
-  overflow: hidden;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.background};
 `;
 
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 `;
 
 const SectionHeader = styled.div`
-  text-align: center;
-  margin-bottom: 50px;
+  margin-bottom: 48px;
+  max-width: 800px;
 `;
 
 const SectionTag = styled(motion.span)`
+  font-family: ${({ theme }) => theme.fonts.code};
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.secondary};
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
   display: inline-block;
-  padding: 8px 20px;
-  background: ${({ theme }) => theme.colors.primaryLight};
-  color: ${({ theme }) => theme.colors.primary};
-  border-radius: 30px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 20px;
 `;
 
 const SectionTitle = styled(motion.h2)`
+  font-family: ${({ theme }) => theme.fonts.display};
   font-size: 2.8rem;
   font-weight: 800;
-  margin-bottom: 15px;
+  color: ${({ theme }) => theme.colors.text};
+  letter-spacing: -0.03em;
 
   span {
-    background: ${({ theme }) => theme.colors.gradient};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: ${({ theme }) => theme.colors.secondary};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -50,44 +46,59 @@ const SectionTitle = styled(motion.h2)`
   }
 `;
 
-const SectionSubtitle = styled(motion.p)`
-  font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  max-width: 600px;
-  margin: 0 auto;
-`;
-
-const FilterButtons = styled(motion.div)`
+const FilterTabs = styled.div`
   display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 50px;
-  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+  margin-bottom: 48px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    flex-direction: column;
+    border-bottom: none;
+    gap: 4px;
+  }
 `;
 
-const FilterButton = styled(motion.button)`
-  padding: 12px 28px;
-  border-radius: 10px;
-  font-size: 0.95rem;
+const FilterTab = styled.button`
+  background: transparent;
+  padding: 14px 24px;
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: 0.85rem;
   font-weight: 600;
-  transition: all 0.3s ease;
-  background: ${({ active, theme }) => 
-    active ? theme.colors.gradient : theme.colors.card};
-  color: ${({ active, theme }) => 
-    active ? 'white' : theme.colors.textSecondary};
-  border: 1px solid ${({ active, theme }) => 
-    active ? 'transparent' : theme.colors.border};
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: ${({ active, theme }) => active ? theme.colors.text : theme.colors.textMuted};
+  border: none;
+  border-bottom: 2px solid ${({ active, theme }) => active ? theme.colors.secondary : 'transparent'};
+  transition: all ${({ theme }) => theme.transitions.fast};
+  text-align: left;
+  white-space: nowrap;
 
   &:hover {
-    transform: translateY(-2px);
-    border-color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.text};
+    border-bottom-color: ${({ active, theme }) => active ? theme.colors.secondary : theme.colors.border};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    border-bottom: none;
+    border-left: 2px solid ${({ active, theme }) => active ? theme.colors.secondary : 'transparent'};
+    padding: 10px 16px;
+
+    &:hover {
+      border-left-color: ${({ active, theme }) => active ? theme.colors.secondary : theme.colors.border};
+    }
   }
 `;
 
 const ProjectsGrid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 32px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     grid-template-columns: 1fr;
@@ -97,326 +108,273 @@ const ProjectsGrid = styled(motion.div)`
 const ProjectCard = styled(motion.div)`
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 20px;
-  overflow: hidden;
-  transition: all 0.3s ease;
+  border-radius: 0px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: border-color ${({ theme }) => theme.transitions.fast}, background ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    transform: translateY(-10px);
-    box-shadow: ${({ theme }) => theme.shadows.glowStrong};
+    border-color: ${({ theme }) => theme.colors.borderHover};
+    background: ${({ theme }) => theme.colors.backgroundSecondary};
   }
 `;
 
-const ProjectImage = styled.div`
-  position: relative;
-  height: 220px;
-  overflow: hidden;
-  background: ${({ theme }) => theme.colors.backgroundTertiary};
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: ${({ theme }) => theme.colors.gradient};
-    opacity: 0.8;
-    z-index: 1;
-  }
-`;
-
-const ProjectIcon = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 4rem;
-  color: white;
-  z-index: 2;
-  opacity: 0.9;
-`;
-
-const ProjectOverlay = styled(motion.div)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  z-index: 3;
-`;
-
-const OverlayButton = styled(motion.a)`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: ${({ theme }) => theme.colors.primary};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.2rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.primaryHover};
-  }
-`;
-
-const FeaturedBadge = styled.div`
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  padding: 6px 14px;
-  background: ${({ theme }) => theme.colors.gradient};
-  border-radius: 20px;
+const RepoLabel = styled.div`
+  font-family: ${({ theme }) => theme.fonts.code};
   font-size: 0.75rem;
-  font-weight: 600;
-  color: white;
+  color: ${({ theme }) => theme.colors.secondary};
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   display: flex;
   align-items: center;
-  gap: 5px;
-  z-index: 4;
-`;
-
-const ProjectContent = styled.div`
-  padding: 25px;
-`;
-
-const ProjectCategory = styled.span`
-  font-size: 0.85rem;
-  color: ${({ theme }) => theme.colors.primary};
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  gap: 6px;
 `;
 
 const ProjectTitle = styled.h3`
-  font-size: 1.4rem;
+  font-family: ${({ theme }) => theme.fonts.display};
+  font-size: 1.35rem;
   font-weight: 700;
-  margin: 10px 0 15px;
+  margin-bottom: 8px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
-const ProjectDescription = styled.p`
-  font-size: 0.95rem;
+const ProjectTagline = styled.h4`
+  font-size: 0.9rem;
+  font-weight: 500;
   color: ${({ theme }) => theme.colors.textSecondary};
-  line-height: 1.7;
-  margin-bottom: 20px;
+  line-height: 1.4;
+  margin-bottom: 16px;
+  border-left: 2px solid ${({ theme }) => theme.colors.border};
+  padding-left: 12px;
 `;
 
-const TechStack = styled.div`
+const ProjectDescription = styled.p`
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.textMuted};
+  line-height: 1.6;
+  margin-bottom: 24px;
+`;
+
+const TechStackWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: 32px;
+  margin-top: auto;
 `;
 
-const TechTag = styled.span`
-  padding: 6px 14px;
+const TechChip = styled.span`
   background: ${({ theme }) => theme.colors.backgroundSecondary};
-  border-radius: 6px;
-  font-size: 0.8rem;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  border-radius: 0px;
+  padding: 4px 10px;
+  font-family: ${({ theme }) => theme.fonts.code};
+  font-size: 0.75rem;
   color: ${({ theme }) => theme.colors.textSecondary};
-  font-weight: 500;
+  transition: all ${({ theme }) => theme.transitions.fast};
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.secondary};
+    color: ${({ theme }) => theme.colors.text};
+  }
 `;
 
-const projects = [
-  {
-    id: 1,
-    title: 'FYP: Seg-Mind: Brain Tumor Analysis',
-    category: 'Computer Vision',
-    description: 'Advanced brain tumor segmentation, classification, and growth prediction system with 3D visualization and explainable AI. Achieved 94% accuracy in tumor detection.',
-    tech: ['Python', 'PyTorch', 'OpenCV', '3D Visualization', 'XAI'],
-    icon: <FaBrain />,
-    featured: true,
-    filter: 'ai',
-    github: 'https://github.com/AbdullahEjaz512/fyp-1',
-    demo: 'http://fyp-1-st56.vercel.app/',
-  },
-  {
-    id: 2,
-    title: 'Neuro-Stream Multimodal Video RAG',
-    category: 'AI & RAG Pipeline',
-    description: 'Advanced multimodal RAG pipeline for video analysis combining visual and textual understanding. Processes video streams with intelligent context retrieval and generation.',
-    tech: ['Python', 'RAG', 'Multimodal AI', 'Video Processing', 'LLMs'],
-    icon: <FaBrain />,
-    featured: true,
-    filter: 'ai',
-    github: 'https://github.com/AbdullahEjaz512/Neuro-Stream-Multimodal-Video-RAG-Pipeline',
-  },
-  {
-    id: 3,
-    title: 'Voice-Agent Multi-RAG',
-    category: 'AI & Voice Systems',
-    description: 'Real-time voice-enabled AI agent using RAG pipeline with multi-model comparison (Gemini, Llama). Features speech-to-text, context retrieval from Pinecone, and natural TTS responses.',
-    tech: ['Python', 'FastAPI', 'RAG', 'Pinecone', 'React', 'TTS/STT'],
-    icon: <FaBrain />,
-    featured: true,
-    filter: 'ai',
-    github: 'https://github.com/AbdullahEjaz512/Voice-Agent-Multi-Rag',
-  },
-  {
-    id: 4,
-    title: 'All-in-One Job Agent',
-    category: 'GenAI & Automation',
-    description: 'Agentic AI system utilizing local LLMs (Ollama) to autonomously generate context-aware professional documents. Includes autonomous browsing and ATS optimization engine.',
-    tech: ['Python', 'Ollama', 'LLMs', 'Agentic AI', 'Automation'],
-    icon: <FaBrain />,
-    featured: false,
-    filter: 'ai',
-    github: 'https://github.com/AbdullahEjaz512/resume-builder-job-agent-extension',
-    demo: 'https://resume-builder-job-agent-extension.vercel.app/',
-  },
-  {
-    id: 5,
-    title: 'E-Commerce Dashboard',
-    category: 'Web Development',
-    description: 'Full-stack e-commerce analytics dashboard with real-time insights, inventory management, and AI-powered demand forecasting.',
-    tech: ['React', 'Node.js', 'MongoDB', 'Chart.js', 'JavaScript'],
-    icon: <FaChartLine />,
-    featured: false,
-    filter: 'web',
-    github: 'https://github.com/AbdullahEjaz512/E-Dashboard',
-    demo: 'https://e-dashboard-6c6i.vercel.app/',
-  },
-  {
-    id: 6,
-    title: 'Aztrosys Full-Stack Platform',
-    category: 'Web Development',
-    description: 'Full-stack web platform with modern UI/UX design and comprehensive backend infrastructure. Built with scalability and performance in mind.',
-    tech: ['TypeScript', 'React', 'Node.js', 'MongoDB', 'Express'],
-    icon: <FaChartLine />,
-    featured: false,
-    filter: 'web',
-    github: 'https://github.com/AbdullahEjaz512/Aztrosys-Full-Stack',
-  },
+const CardActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid ${({ theme }) => theme.colors.border};
+  padding-top: 20px;
+  margin-top: auto;
+`;
+
+const ActionLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: ${({ theme }) => theme.fonts.code};
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: ${({ theme }) => theme.colors.textSecondary};
+  transition: color ${({ theme }) => theme.transitions.fast};
+
+  svg {
+    font-size: 0.9rem;
+  }
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text};
+  }
+`;
+
+const categories = [
+  { id: 'all', name: '[00] ALL REPOSITORIES' },
+  { id: 'cv-medical', name: '[01] COMPUTER VISION & MEDICAL AI' },
+  { id: 'genai-agentic', name: '[02] GENERATIVE AI & AGENTIC ECOSYSTEMS' },
+  { id: 'web-platforms', name: '[03] FULL-STACK WEB DEVELOPMENT & PLATFORMS' },
 ];
 
-const filters = ['All', 'AI', 'Web'];
+const projectsData = [
+  {
+    id: 'seg-mind',
+    name: 'Seg-Mind',
+    repo: 'fyp-1',
+    tagline: 'Full-Stack 3D Medical Imaging & Automated Tumor Segmentation Platform',
+    category: 'cv-medical',
+    tech: ['PyTorch', '3D U-Net', 'FastAPI', 'PostgreSQL', 'React.js', 'Three.js', 'vtk.js'],
+    description: 'Developed an end-to-end medical AI dashboard to securely upload and process high-dimensional MRI scans. Implemented a custom 3D U-Net architecture for precise volumetric segmentation alongside Grad-CAM for explainable visual diagnostics. Built an asynchronous backend to handle heavy inference loads without blocking, paired with browser-based Three.js/vtk.js rendering engines for real-time 3D reconstruction manipulation.',
+    codeUrl: 'https://github.com/AbdullahEjaz512/fyp-1',
+    breakdownUrl: '#about'
+  },
+  {
+    id: 'pashto-ocr',
+    name: 'Pashto Handwriting Detection System',
+    repo: 'Offline_pashto_handwriting-detection',
+    tagline: 'Two-Stage Spatial Text Localization & Sequential Script OCR Pipeline',
+    category: 'cv-medical',
+    tech: ['Python', 'PyTorch', 'YOLOv8', 'CRNN', 'Deep Learning', 'Image Processing'],
+    description: 'Engineered an advanced offline computer vision pipeline optimizing handwriting recognition for the complex, unconstrained PHTI dataset. Deployed YOLOv8 to handle high-precision spatial text localization and bounding-box generation across noisy backgrounds. Integrated a Convolutional Recurrent Neural Network (CRNN) to extract long-range character dependencies from localized image slices.',
+    codeUrl: 'https://github.com/AbdullahEjaz512/Offline_pashto_handwriting-detection',
+    breakdownUrl: '#about'
+  },
+  {
+    id: 'neuro-stream',
+    name: 'Neuro-Stream Multimodal Video RAG',
+    repo: 'Neuro-Stream-Multimodal-Video-RAG-Pipeline',
+    tagline: 'Real-Time Multimodal Voice & Video Knowledge Retrieval System',
+    category: 'genai-agentic',
+    tech: ['Python', 'OpenAI Whisper', 'Qdrant', 'ChromaDB', 'LangChain', 'Local LLMs'],
+    description: 'Built a cutting-edge conversational AI system that transcends text inputs, allowing users to query dense media repositories via live audio. Utilized OpenAI\'s Whisper for local audio transcription, syncing data streams with multi-tier semantic embeddings housed inside specialized vector stores. Orchestrated the agentic execution using LangChain for real-time contextual answer synthesis.',
+    codeUrl: 'https://github.com/AbdullahEjaz512/Neuro-Stream-Multimodal-Video-RAG-Pipeline',
+    breakdownUrl: '#about'
+  },
+  {
+    id: 'job-agent',
+    name: 'Autonomous Job Agent',
+    repo: 'resume-builder-job-agent-extension',
+    tagline: 'Browser-Based Automation Agent Powered by Local LLM Core',
+    category: 'genai-agentic',
+    tech: ['TypeScript', 'Chrome Extension API', 'DOM Parsing', 'Ollama', 'Agentic AI'],
+    description: 'Designed an autonomous web-automation application capable of traversing dynamic external web forms without relying on brittle, hardcoded coordinates. Engineered a custom DOM parsing engine that reads website structures dynamically, passing contextual nodes to local LLMs via Ollama to fill inputs, validate steps, and automate complex workflows privately.',
+    codeUrl: 'https://github.com/AbdullahEjaz512/resume-builder-job-agent-extension',
+    breakdownUrl: '#about'
+  },
+  {
+    id: 'aztrosys',
+    name: 'Aztrosys Corporate Architecture',
+    repo: 'Aztrosys-Full-Stack',
+    tagline: 'Enterprise Web Platform with Integrated LLM Customer Support',
+    category: 'web-platforms',
+    tech: ['Next.js', 'TypeScript', 'Node.js', 'Express.js', 'PostgreSQL', 'Tailwind CSS', 'AWS EC2'],
+    description: 'Handled end-to-end frontend and backend ownership of a live corporate web platform. Developed responsive, SEO-optimized user interfaces in Next.js/TypeScript and integrated custom LLM-powered chat interfaces natively into a scalable Node.js backend. Managed database relational schemas in PostgreSQL and provisioned secure infrastructure deployment workflows on AWS cloud instances.',
+    codeUrl: 'https://github.com/AbdullahEjaz512/Aztrosys-Full-Stack',
+    breakdownUrl: '#about'
+  },
+  {
+    id: 'wb-associates',
+    name: 'WB-Associates',
+    repo: 'WB-Associates',
+    tagline: 'Performance-Optimized Corporate Web Platform for WB Private Limited',
+    category: 'web-platforms',
+    tech: ['JavaScript', 'HTML5', 'CSS3', 'Modern UI Layouts', 'Performance Profiling'],
+    description: 'Architected the official user-facing digital presence for a private limited firm, emphasizing strict asset optimization, pristine layout responsiveness, and clean interactive branding component blocks.',
+    codeUrl: 'https://github.com/AbdullahEjaz512/WB-Associates',
+    breakdownUrl: '#about'
+  },
+  {
+    id: 'xtremedrive',
+    name: 'XtremeDrive & Multi-Tier Systems',
+    repo: 'XtremeDrive / queen-s-marry',
+    tagline: 'High-Throughput Web Applications and Clean 3-Tier Multi-Platform Architecture',
+    category: 'web-platforms',
+    tech: ['Dart', 'Flutter', 'Node.js', 'Express', 'Next.js Admin Dashboard', 'State Management'],
+    description: 'Contributed to and built robust, multi-tier full-stack storage and orchestration tools. Showcased seamless API state management between unified mobile architectures (Flutter), decoupled server REST endpoints, and complex administrative control dashboards.',
+    codeUrl: 'https://github.com/AbdullahEjaz512/XtremeDrive',
+    breakdownUrl: '#about'
+  }
+];
 
 const Projects = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
-  const [activeFilter, setActiveFilter] = useState('All');
-  const [hoveredProject, setHoveredProject] = useState(null);
+  const [activeTab, setActiveTab] = useState('all');
 
-  const filteredProjects = activeFilter === 'All' 
-    ? projects 
-    : projects.filter(p => p.filter.toLowerCase() === activeFilter.toLowerCase());
+  const filteredProjects = activeTab === 'all' 
+    ? projectsData 
+    : projectsData.filter(p => p.category === activeTab);
 
   return (
     <ProjectsSection id="projects" ref={ref}>
       <Container>
         <SectionHeader>
           <SectionTag
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
           >
-            My Work
+            [04 / WORK_PORTFOLIO]
           </SectionTag>
           <SectionTitle
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.08 }}
           >
-            Featured <span>Projects</span>
+            Selected <span>Engineering Work</span>
           </SectionTitle>
-          <SectionSubtitle
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            Showcasing my expertise in AI, Machine Learning, and Full-Stack Development
-          </SectionSubtitle>
         </SectionHeader>
 
-        <FilterButtons
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          {filters.map((filter) => (
-            <FilterButton
-              key={filter}
-              active={activeFilter === filter}
-              onClick={() => setActiveFilter(filter)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+        <FilterTabs>
+          {categories.map((cat) => (
+            <FilterTab
+              key={cat.id}
+              active={activeTab === cat.id}
+              onClick={() => setActiveTab(cat.id)}
             >
-              {filter}
-            </FilterButton>
+              {cat.name}
+            </FilterTab>
           ))}
-        </FilterButtons>
+        </FilterTabs>
 
         <ProjectsGrid layout>
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => (
-              <ProjectCard
+              <motion.div
                 key={project.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: index * 0.1 }}
-                onHoverStart={() => setHoveredProject(project.id)}
-                onHoverEnd={() => setHoveredProject(null)}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
               >
-                <ProjectImage>
-                  <ProjectIcon>{project.icon}</ProjectIcon>
-                  {project.featured && (
-                    <FeaturedBadge>
-                      <HiSparkles /> Featured
-                    </FeaturedBadge>
-                  )}
-                  <AnimatePresence>
-                    {hoveredProject === project.id && (
-                      <ProjectOverlay
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                      >
-                        <OverlayButton
-                          href={project.github}
-                          target="_blank"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
-                          <FaGithub />
-                        </OverlayButton>
-                        {project.demo && project.demo !== '#' && (
-                          <OverlayButton
-                            href={project.demo}
-                            target="_blank"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                          >
-                            <FaExternalLinkAlt />
-                          </OverlayButton>
-                        )}
-                      </ProjectOverlay>
-                    )}
-                  </AnimatePresence>
-                </ProjectImage>
+                <ProjectCard>
+                  <div>
+                    <RepoLabel>
+                      <FaCodeBranch /> repo: {project.repo}
+                    </RepoLabel>
+                    <ProjectTitle>{project.name}</ProjectTitle>
+                    <ProjectTagline>{project.tagline}</ProjectTagline>
+                    <ProjectDescription>{project.description}</ProjectDescription>
+                  </div>
 
-                <ProjectContent>
-                  <ProjectCategory>{project.category}</ProjectCategory>
-                  <ProjectTitle>{project.title}</ProjectTitle>
-                  <ProjectDescription>{project.description}</ProjectDescription>
-                  <TechStack>
-                    {project.tech.map((tech) => (
-                      <TechTag key={tech}>{tech}</TechTag>
+                  <TechStackWrapper>
+                    {project.tech.map((techItem) => (
+                      <TechChip key={techItem}>{techItem}</TechChip>
                     ))}
-                  </TechStack>
-                </ProjectContent>
-              </ProjectCard>
+                  </TechStackWrapper>
+
+                  <CardActions>
+                    <ActionLink href={project.codeUrl} target="_blank">
+                      View Codebase <HiArrowSmRight />
+                    </ActionLink>
+                    <ActionLink href={project.breakdownUrl}>
+                      Architecture Breakdown <HiArrowSmRight />
+                    </ActionLink>
+                  </CardActions>
+                </ProjectCard>
+              </motion.div>
             ))}
           </AnimatePresence>
         </ProjectsGrid>
@@ -426,3 +384,4 @@ const Projects = () => {
 };
 
 export default Projects;
+

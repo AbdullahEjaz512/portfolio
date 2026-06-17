@@ -1,49 +1,44 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { FaBrain, FaCode, FaRobot, FaLightbulb } from 'react-icons/fa';
 import profileImage from '../assets/profile.png';
 
 const AboutSection = styled.section`
   background: ${({ theme }) => theme.colors.backgroundSecondary};
-  position: relative;
-  overflow: hidden;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 `;
 
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 `;
 
 const SectionHeader = styled.div`
-  text-align: center;
   margin-bottom: 60px;
+  max-width: 800px;
 `;
 
 const SectionTag = styled(motion.span)`
+  font-family: ${({ theme }) => theme.fonts.code};
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.secondary};
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
   display: inline-block;
-  padding: 8px 20px;
-  background: ${({ theme }) => theme.colors.primaryLight};
-  color: ${({ theme }) => theme.colors.primary};
-  border-radius: 30px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 20px;
 `;
 
 const SectionTitle = styled(motion.h2)`
+  font-family: ${({ theme }) => theme.fonts.display};
   font-size: 2.8rem;
   font-weight: 800;
-  margin-bottom: 15px;
+  color: ${({ theme }) => theme.colors.text};
+  letter-spacing: -0.03em;
 
   span {
-    background: ${({ theme }) => theme.colors.gradient};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: ${({ theme }) => theme.colors.secondary};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -54,8 +49,8 @@ const SectionTitle = styled(motion.h2)`
 const AboutGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1.2fr;
-  gap: 60px;
-  align-items: center;
+  gap: 64px;
+  align-items: stretch;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr;
@@ -65,45 +60,45 @@ const AboutGrid = styled.div`
 
 const AboutImageWrapper = styled(motion.div)`
   position: relative;
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.card};
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const AboutImage = styled.div`
-  position: relative;
+  width: 100%;
+  height: 100%;
   
   img {
     width: 100%;
-    max-width: 450px;
-    border-radius: 20px;
-    box-shadow: ${({ theme }) => theme.shadows.large};
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    right: 20px;
-    bottom: 20px;
-    border: 3px solid ${({ theme }) => theme.colors.primary};
-    border-radius: 20px;
-    z-index: -1;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid ${({ theme }) => theme.colors.border};
+    filter: grayscale(100%) contrast(105%);
   }
 `;
 
-const AboutContent = styled(motion.div)``;
+const AboutContent = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 const AboutText = styled.p`
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: ${({ theme }) => theme.colors.textSecondary};
-  line-height: 1.9;
-  margin-bottom: 25px;
+  line-height: 1.8;
+  margin-bottom: 24px;
 `;
 
-const HighlightCards = styled.div`
+const HighlightGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-top: 40px;
+  gap: 16px;
+  margin-top: 24px;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     grid-template-columns: 1fr;
@@ -113,95 +108,102 @@ const HighlightCards = styled.div`
 const HighlightCard = styled(motion.div)`
   background: ${({ theme }) => theme.colors.card};
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 16px;
-  padding: 25px;
+  border-radius: 0px;
+  padding: 24px;
   display: flex;
-  gap: 15px;
-  transition: all 0.3s ease;
+  gap: 16px;
+  align-items: flex-start;
+  transition: all ${({ theme }) => theme.transitions.fast};
 
   &:hover {
-    border-color: ${({ theme }) => theme.colors.primary};
-    transform: translateY(-5px);
-    box-shadow: ${({ theme }) => theme.shadows.glow};
+    border-color: ${({ theme }) => theme.colors.borderHover};
+    background: ${({ theme }) => theme.colors.backgroundSecondary};
   }
 `;
 
 const CardIcon = styled.div`
-  width: 50px;
-  height: 50px;
-  min-width: 50px;
-  border-radius: 12px;
-  background: ${({ theme }) => theme.colors.gradient};
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  background: ${({ theme }) => theme.colors.backgroundSecondary};
+  border: 1px solid ${({ theme }) => theme.colors.border};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
-  color: white;
+  font-size: 1.1rem;
+  color: ${({ theme }) => theme.colors.secondary};
 `;
 
 const CardContent = styled.div`
   h4 {
-    font-size: 1.1rem;
+    font-family: ${({ theme }) => theme.fonts.display};
+    font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
     color: ${({ theme }) => theme.colors.text};
   }
 
   p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: ${({ theme }) => theme.colors.textSecondary};
+    line-height: 1.5;
   }
 `;
 
-const Stats = styled.div`
-  display: flex;
-  gap: 40px;
+const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.card};
   margin-top: 40px;
-  padding-top: 30px;
-  border-top: 1px solid ${({ theme }) => theme.colors.border};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    flex-wrap: wrap;
-    gap: 25px;
-  }
 `;
 
 const StatItem = styled(motion.div)`
+  padding: 24px;
+  text-align: center;
+  border-right: 1px solid ${({ theme }) => theme.colors.border};
+
+  &:last-child {
+    border-right: none;
+  }
+
   h3 {
-    font-size: 2.5rem;
+    font-family: ${({ theme }) => theme.fonts.display};
+    font-size: 2.2rem;
     font-weight: 800;
-    background: ${({ theme }) => theme.colors.gradient};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: ${({ theme }) => theme.colors.text};
+    margin-bottom: 4px;
   }
 
   p {
-    color: ${({ theme }) => theme.colors.textSecondary};
-    font-size: 0.95rem;
+    font-family: ${({ theme }) => theme.fonts.code};
+    color: ${({ theme }) => theme.colors.textMuted};
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 `;
 
 const highlights = [
   {
     icon: <FaBrain />,
-    title: 'AI & ML Expert',
-    description: 'Deep expertise in neural networks and ML algorithms',
+    title: 'AI & CV Systems',
+    description: 'Bespoke image segmentation and OCR local architectures.',
   },
   {
     icon: <FaRobot />,
-    title: 'Computer Vision',
-    description: 'Building intelligent image & video analysis systems',
+    title: 'Agentic Ecosystems',
+    description: 'Dynamic web and vector search automation loops.',
   },
   {
     icon: <FaCode />,
-    title: 'Full Stack Dev',
-    description: 'Creating responsive and modern web applications',
+    title: 'Full Stack Tech',
+    description: 'SEO-tuned Next.js pages and secure REST frameworks.',
   },
   {
     icon: <FaLightbulb />,
-    title: 'Problem Solver',
-    description: 'Turning complex problems into elegant solutions',
+    title: 'Bespoke Architectures',
+    description: 'Performant local solutions avoiding generic templates.',
   },
 ];
 
@@ -214,63 +216,56 @@ const About = () => {
       <Container>
         <SectionHeader>
           <SectionTag
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
           >
-            About Me
+            [01 / BRIEF_BIO]
           </SectionTag>
           <SectionTitle
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.4, delay: 0.08 }}
           >
-            Passionate <span>AI Developer</span> & Innovator
+            Engineering <span>Custom Intelligence</span> & Web Systems
           </SectionTitle>
         </SectionHeader>
 
         <AboutGrid>
           <AboutImageWrapper
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5 }}
           >
             <AboutImage>
-              <img src={profileImage} alt="About Me" />
+              <img src={profileImage} alt="Abdullah Ejaz Profile" />
             </AboutImage>
           </AboutImageWrapper>
 
           <AboutContent
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <AboutText>
-              I'm a passionate AI Developer with extensive experience in Machine Learning, 
-              Deep Learning, and Computer Vision. My journey in technology began with a 
-              fascination for how machines can learn and make intelligent decisions.
-            </AboutText>
-            <AboutText>
-              I specialize in building end-to-end AI solutions, from data preprocessing 
-              and model training to deployment and optimization. Whether it's developing 
-              neural networks for image recognition, creating NLP models, or building 
-              full-stack applications, I bring creativity and technical excellence to 
-              every project.
-            </AboutText>
-            <AboutText>
-              My goal is to leverage AI to solve real-world problems and create 
-              meaningful impact. I'm constantly exploring new technologies and 
-              pushing the boundaries of what's possible with artificial intelligence.
-            </AboutText>
+            <div>
+              <AboutText>
+                I am a systems-focused software engineer specializing in deep learning, custom computer vision 
+                pipelines, and high-performance full-stack web platforms. My goal is to build robust, scalable 
+                systems that avoid template clichés in favor of architectural rigor and custom optimization.
+              </AboutText>
+              <AboutText>
+                From deploying 3D U-Net medical segmentation frameworks to engineering autonomous job agents powered by local 
+                LLMs (Ollama) and building responsive, secure enterprise backends, I write performant code designed for real production environments.
+              </AboutText>
+            </div>
 
-            <HighlightCards>
+            <HighlightGrid>
               {highlights.map((item, index) => (
                 <HighlightCard
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 10 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
-                  whileHover={{ y: -5 }}
+                  transition={{ duration: 0.3, delay: 0.15 + index * 0.05 }}
                 >
                   <CardIcon>{item.icon}</CardIcon>
                   <CardContent>
@@ -279,34 +274,34 @@ const About = () => {
                   </CardContent>
                 </HighlightCard>
               ))}
-            </HighlightCards>
+            </HighlightGrid>
 
-            <Stats>
+            <StatsGrid>
               <StatItem
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.6 }}
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.35 }}
               >
                 <h3>3+</h3>
-                <p>Years Experience</p>
+                <p>Years Practice</p>
               </StatItem>
               <StatItem
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.7 }}
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.4 }}
               >
                 <h3>20+</h3>
-                <p>Projects Completed</p>
+                <p>Systems Deployed</p>
               </StatItem>
               <StatItem
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.8 }}
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.45 }}
               >
                 <h3>15+</h3>
-                <p>Happy Clients</p>
+                <p>Private Clients</p>
               </StatItem>
-            </Stats>
+            </StatsGrid>
           </AboutContent>
         </AboutGrid>
       </Container>
@@ -315,3 +310,4 @@ const About = () => {
 };
 
 export default About;
+
